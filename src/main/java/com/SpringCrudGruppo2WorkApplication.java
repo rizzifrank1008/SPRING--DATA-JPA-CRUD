@@ -25,6 +25,9 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	@Resource(name = "categoryToInsert3")
 	private Category categoryToInsert3;
 
+	@Resource(name = "categoryToUpdate")
+	private Category categoryToUpdate;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCrudGruppo2WorkApplication.class, args);
 
@@ -36,6 +39,9 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		categoryRepository.save(categoryToInsert1);
 		categoryRepository.save(categoryToInsert2);
 		categoryRepository.save(categoryToInsert3);
+		categoryRepository.save(categoryToUpdate);
+		categoryRepository.deleteById(2);
+		categoryRepository.findAll().forEach(System.out::println);
 
 	}
 

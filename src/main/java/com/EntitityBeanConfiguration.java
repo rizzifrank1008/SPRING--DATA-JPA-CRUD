@@ -26,4 +26,9 @@ public class EntitityBeanConfiguration {
 		return new Category("Comic");
 	}
 
+	@Bean(name = "categoryToUpdate")
+	public Category getCategoryToUpdate() {
+		return new Category(1, "Thriller");
+	}
+
 }
