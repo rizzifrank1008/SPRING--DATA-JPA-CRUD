@@ -24,7 +24,7 @@ public class Country implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "country_id")
-	private int countryId;
+	private Integer countryId;
 
 	@UpdateTimestamp
 	@Column(name = "last_update")
@@ -45,7 +45,7 @@ public class Country implements Serializable {
 	}
 
 	// Costruttore per l'update
-	public Country(int countryId, String country) {
+	public Country(Integer countryId, String country) {
 		this.countryId = countryId;
 		this.country = country;
 	}
@@ -62,7 +62,7 @@ public class Country implements Serializable {
 		return this.countryId;
 	}
 
-	public void setCountryId(int countryId) {
+	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
 	}
 

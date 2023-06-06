@@ -6,7 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.entity.Category;
+import com.entity.City;
+import com.entity.Country;
 import com.repository.CategoryRepository;
+import com.repository.CityRepository;
+import com.repository.CountryRepository;
 
 import jakarta.annotation.Resource;
 
@@ -15,6 +19,10 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private CountryRepository countryRepository;
+	@Autowired
+	private CityRepository cityRepository;
 
 	@Resource(name = "categoryToInsert1")
 	private Category categoryToInsert1;
@@ -27,6 +35,13 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 	@Resource(name = "categoryToUpdate")
 	private Category categoryToUpdate;
+
+	@Resource(name = "countryToInsert1")
+	private Country countryToInsert1;
+	@Resource(name = "cityToInsert1")
+	private City cityToInsert1;
+	@Resource(name = "cityToUpdate")
+	private City cityToUpdate;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCrudGruppo2WorkApplication.class, args);
@@ -42,6 +57,12 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		categoryRepository.save(categoryToUpdate);
 		categoryRepository.deleteById(2);
 		categoryRepository.findAll().forEach(System.out::println);
+		categoryRepository.FindAllByName("Comic").forEach(System.out::println);
+		countryRepository.save(countryToInsert1);
+		cityToInsert1.setCountry(countryToInsert1);
+		cityRepository.save(cityToInsert1);
+		cityToUpdate.setCountry(countryToInsert1);
+		cityRepository.save(cityToUpdate);
 
 	}
 

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.entity.Category;
+import com.entity.City;
+import com.entity.Country;
 
 @Configuration
 public class EntitityBeanConfiguration {
@@ -31,4 +33,20 @@ public class EntitityBeanConfiguration {
 		return new Category(1, "Thriller");
 	}
 
+	@Bean(name = "countryToInsert1")
+
+	public Country getCountryToInsert1() {
+		return new Country("Italia");
+	}
+
+	@Bean(name = "cityToInsert1")
+
+	public City getCityToInsert1() {
+		return new City("Roma");
+	}
+
+	@Bean(name = "cityToUpdate")
+	public City getCityToUpdate() {
+		return new City("Palermo", 1);
+	}
 }

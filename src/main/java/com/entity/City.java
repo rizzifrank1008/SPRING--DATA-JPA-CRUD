@@ -28,7 +28,7 @@ public class City implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "city_id")
-	private int cityId;
+	private Integer cityId;
 
 	@UpdateTimestamp
 	@Column(name = "last_update")
@@ -51,7 +51,7 @@ public class City implements Serializable {
 	}
 
 	// Costruttore per l'update
-	public City(String city, int cityId) {
+	public City(String city, Integer cityId) {
 		this.city = city;
 		this.cityId = cityId;
 
@@ -71,7 +71,7 @@ public class City implements Serializable {
 		this.city = city;
 	}
 
-	public int getCityId() {
+	public Integer getCityId() {
 		return this.cityId;
 	}
 
