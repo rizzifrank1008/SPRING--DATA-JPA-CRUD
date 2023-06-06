@@ -39,14 +39,37 @@ public class EntitityBeanConfiguration {
 		return new Country("Italia");
 	}
 
+	@Bean(name = "countryToInsert2")
+
+	public Country getCountryToInser21() {
+		return new Country("Romania");
+	}
+
 	@Bean(name = "cityToInsert1")
 
 	public City getCityToInsert1() {
 		return new City("Roma");
 	}
 
+	@Bean(name = "cityToInsert2")
+
+	public City getCityToInsert2() {
+		return new City("Bucarest");
+	}
+
+	@Bean(name = "cityToInsert3")
+
+	public City getCityToInsert3() {
+		return new City("Grumo Appula");
+	}
+
 	@Bean(name = "cityToUpdate")
 	public City getCityToUpdate() {
 		return new City("Palermo", 1);
+	}
+
+	@Bean(name = "countryToUpdate")
+	public Country getCountryToUpdate() {
+		return new Country(2, "Albania");
 	}
 }

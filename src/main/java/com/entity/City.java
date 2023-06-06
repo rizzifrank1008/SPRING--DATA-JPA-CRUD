@@ -91,4 +91,10 @@ public class City implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
+	@Override
+	public String toString() {
+		return "City [city=" + city + ", cityId=" + cityId + ", lastUpdate=" + lastUpdate + ", country=" + country
+				+ "]";
+	}
+
 }

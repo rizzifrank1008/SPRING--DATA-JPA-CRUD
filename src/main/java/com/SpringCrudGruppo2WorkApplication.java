@@ -40,8 +40,18 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	private Country countryToInsert1;
 	@Resource(name = "cityToInsert1")
 	private City cityToInsert1;
+	@Resource(name = "cityToInsert2")
+	private City cityToInsert2;
+	@Resource(name = "cityToInsert3")
+	private City cityToInsert3;
 	@Resource(name = "cityToUpdate")
 	private City cityToUpdate;
+
+	@Resource(name = "countryToUpdate")
+	private Country countryToUpdate;
+
+	@Resource(name = "countryToInsert2")
+	private Country countryToInsert2;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringCrudGruppo2WorkApplication.class, args);
@@ -54,16 +64,39 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		categoryRepository.save(categoryToInsert1);
 		categoryRepository.save(categoryToInsert2);
 		categoryRepository.save(categoryToInsert3);
-		categoryRepository.save(categoryToUpdate);
+		categoryRepository.saveAndFlush(categoryToUpdate);
 		categoryRepository.deleteById(2);
 		categoryRepository.findAll().forEach(System.out::println);
 		categoryRepository.FindAllByName("Comic").forEach(System.out::println);
 		countryRepository.save(countryToInsert1);
 		cityToInsert1.setCountry(countryToInsert1);
 		cityRepository.save(cityToInsert1);
-		cityToUpdate.setCountry(countryToInsert1);
-		cityRepository.save(cityToUpdate);
 
+		cityToUpdate.setCountry(countryToInsert1);
+
+		// nel caso si voglia fare un update che prima deve leggere le modifiche salvate
+		// in un secondo momento (country id) va usato il saveAndFlush
+		cityRepository.saveAndFlush(cityToUpdate);
+
+//		// caso delete senza cascadeRemove
+//
+//		countryRepository.save(countryToInsert2); // inserisco Romania
+//		cityRepository.deleteById(1); // non avendo il cascade remove devo rimuovere prima il figlio
+//		countryRepository.deleteById(1); // rimuovo italia
+
+		// caso delete con cascadeRemove
+
+		countryRepository.save(countryToInsert2); // inserisco Romania
+//		countryRepository.deleteById(1); // rimuovo italia
+
+		// stampiamo tutte le città d'italia (palermo e grumo appula)
+		cityToInsert2.setCountry(countryToInsert2);
+		cityRepository.saveAndFlush(cityToInsert2);
+
+		cityToInsert3.setCountry(countryToInsert1);
+		cityRepository.saveAndFlush(cityToInsert3);
+
+		cityRepository.FindCityByCountry(countryToInsert1).forEach(System.out::println);
 	}
 
 }
