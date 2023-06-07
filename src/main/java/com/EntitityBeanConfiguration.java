@@ -3,9 +3,13 @@ package com;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.entity.Actor;
+import com.entity.ActorFilm;
+import com.entity.ActorFilmPK;
 import com.entity.Category;
 import com.entity.City;
 import com.entity.Country;
+import com.entity.Film;
 
 @Configuration
 public class EntitityBeanConfiguration {
@@ -72,4 +76,66 @@ public class EntitityBeanConfiguration {
 	public Country getCountryToUpdate() {
 		return new Country(2, "Albania");
 	}
+
+	@Bean(name = "actorToInsert1")
+	public Actor getActorToInsert1() {
+		return new Actor("Mia", "Khalifa");
+	}
+
+	@Bean(name = "actorToInsert2")
+	public Actor getActorToInsert2() {
+		return new Actor("Tommaso", "Crociera");
+	}
+
+	@Bean(name = "actorToInsert3")
+	public Actor getActorToInsert3() {
+		return new Actor("Giovanni", "Profondo");
+	}
+
+	@Bean(name = "actorToInsert4")
+	public Actor getActorToInsert4() {
+		return new Actor("Vincenzo", "Benzina");
+	}
+
+	@Bean(name = "actorToInsert5")
+	public Actor getActorToInsert5() {
+		return new Actor("Morgano", "Uomolibero");
+	}
+
+	@Bean(name = "filmToInsert1")
+	public Film getFilmToInsert1() {
+		return new Film("il Veloce e il furioso", "persone che corrono arrabbiate per l'aumento di benzina");
+	}
+
+	@Bean(name = "filmToInsert2")
+	public Film getFilmToInsert2() {
+		return new Film("il morto che cammina",
+				"persone zombie che corrono arrabbiate perchè gli umani sono piu veloci");
+	}
+
+	@Bean(name = "filmToInsert3")
+	public Film getFilmToInsert3() {
+		return new Film("Forrestiero Gomma", "persone disabile che corre arrabbiata perchè genny non glie la da");
+	}
+
+	@Bean(name = "actorFilmToInsert1")
+	public ActorFilm getActorFilmToInsert1() {
+		return new ActorFilm();
+	}
+
+	@Bean(name = "actorFilmPKToInsert1")
+	public ActorFilmPK getActorFilmPKToInsert1() {
+		return new ActorFilmPK();
+	}
+
+	@Bean(name = "actorFilmPKToInsert2")
+	public ActorFilmPK actorFilmPKToInsert2() {
+		return new ActorFilmPK();
+	}
+
+	@Bean(name = "actorFilmPKToInsert3")
+	public ActorFilmPK actorFilmPKToInsert3() {
+		return new ActorFilmPK();
+	}
+
 }
