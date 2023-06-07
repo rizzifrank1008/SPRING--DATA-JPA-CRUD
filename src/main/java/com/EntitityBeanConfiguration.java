@@ -107,6 +107,11 @@ public class EntitityBeanConfiguration {
 		return new Film("il Veloce e il furioso", "persone che corrono arrabbiate per l'aumento di benzina");
 	}
 
+	@Bean(name = "filmToUpdate")
+	public Film getFilmToUpdate() {
+		return new Film(2, "The Walking Dead", "persone che corrono arrabbiate per l'aumento di benzina");
+	}
+
 	@Bean(name = "filmToInsert2")
 	public Film getFilmToInsert2() {
 		return new Film("il morto che cammina",
@@ -120,6 +125,11 @@ public class EntitityBeanConfiguration {
 
 	@Bean(name = "actorFilmToInsert1")
 	public ActorFilm getActorFilmToInsert1() {
+		return new ActorFilm();
+	}
+
+	@Bean(name = "actorFilmToInsert2")
+	public ActorFilm getActorFilmToInsert2() {
 		return new ActorFilm();
 	}
 

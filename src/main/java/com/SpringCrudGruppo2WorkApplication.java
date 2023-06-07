@@ -1,5 +1,8 @@
 package com;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -89,12 +92,17 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 	@Resource(name = "filmToInsert3")
 	private Film filmToInsert3;
+	@Resource(name = "filmToUpdate")
+	private Film filmToUpdate;
 
 	@Resource(name = "actorFilmToInsert1")
 	private ActorFilm actorFilmToInsert1;
 
 	@Resource(name = "actorFilmPKToInsert1")
 	private ActorFilmPK actorFilmPKToInsert1;
+
+	@Resource(name = "actorFilmToInsert2")
+	private ActorFilm actorFilmToInsert2;
 
 	@Resource(name = "actorFilmPKToInsert2")
 	private ActorFilmPK actorFilmPKToInsert2;
@@ -163,22 +171,48 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorFilmRepository.save(actorFilmToInsert1);
 
 		// attore e film uniti
-		// inserisco il film
+		// inserisco il film non relazionato
 		filmRepository.save(filmToInsert2);
+		// Istanzio una lista di Actor da aggiungere ad un Film
+		List<Actor> actorList = new ArrayList<>();
+		// Popolo la lista
+		actorList.add(actorToInsert2);
+		actorList.add(actorToInsert3);
+		// Inserisco gli attori non relazionati ad un film
+		actorRepository.saveAll(actorList);
+		// Faccio un for con lo scopo di relazionare le entita
+		for (Actor actor : actorList) {
+			// Imposto l'attore corrente all'entita relazionale(actorFilm)
+			actorFilmToInsert2.setActor(actor);
 
-		// inserisco gli attori
-		actorRepository.save(actorToInsert2);
-		actorRepository.save(actorToInsert3);
+			// Imposto il film all'entita relazionale, poiché essa si aspetta un oggetto
+			// film e un oggetto attore
+			actorFilmToInsert2.setFilm(filmToInsert2);
+			// Popolo le primary keys dell ActorFilmPK che sono relazionate all'entita
+			// relazionale ActorFilm
+			actorFilmPKToInsert2.setActorId(actor.getActorId());
+			actorFilmPKToInsert2.setFilmId(filmToInsert2.getFilmId());
+			// Imposto l'id dell'entita ActorFilmPK all'entita relazionale ActorFilm
+			actorFilmToInsert2.setId(actorFilmPKToInsert2);
+			// Inserisco la tebella relazionale nel DB
+			actorFilmRepository.save(actorFilmToInsert2);
+		}
 
-		actorFilmToInsert2.setActor(actorToInsert2);
-		actorFilmToInsert1.setActor(actorToInsert3);
-		actorFilmToInsert1.setFilm(filmToInsert2);
+		// Modifico il film il morto che cammina con the walking dead id 2
+		filmRepository.save(filmToUpdate);
+		// Cancello il film id 1 e l'entita relazionale senza cancellare l'attore
+		actorFilmRepository.delete(actorFilmToInsert1);
+		filmRepository.delete(filmToInsert1);
+		filmRepository.findAll().forEach(System.out::println);
+		// Imposto il film id 2 all'attore id 1 che attualmente non ha film e faccio il
+		// save
+		actorFilmToInsert2.setActor(actorToInsert1);
+		actorFilmToInsert2.setFilm(filmToInsert2);
+		actorFilmPKToInsert3.setActorId(actorToInsert1.getActorId());
+		actorFilmPKToInsert3.setFilmId(filmToInsert2.getFilmId());
+		actorFilmToInsert2.setId(actorFilmPKToInsert3);
+		actorFilmRepository.save(actorFilmToInsert2);
 
-		actorFilmPKToInsert1.setActorId(actorToInsert2.getActorId());
-		actorFilmPKToInsert1.setFilmId(filmToInsert2.getFilmId());
-		actorFilmToInsert1.setId(actorFilmPKToInsert1);
-
-		actorFilmRepository.save(actorFilmToInsert1);
 	}
 
 }

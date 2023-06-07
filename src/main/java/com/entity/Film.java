@@ -46,6 +46,12 @@ public class Film implements Serializable {
 
 	}
 
+	public Film(Integer filmId, String title, String description) {
+		this.filmId = filmId;
+		this.title = title;
+		this.description = description;
+	}
+
 	// Costruttore per le insert con parametri pre impostati in modo da inserire
 	// solo title e description
 	public Film(String title, String description) {
@@ -97,7 +103,7 @@ public class Film implements Serializable {
 	@Override
 	public String toString() {
 		return "Film [filmId=" + filmId + ", title=" + title + ", description=" + description + ", lastUpdate="
-				+ lastUpdate + ", actors=" + actors + "]";
+				+ lastUpdate + "]";
 	}
 
 }
