@@ -38,7 +38,7 @@ public class Film implements Serializable {
 	private Timestamp lastUpdate;
 
 	@OneToMany(mappedBy = "film")
-	private List<ActorFilm> actors = new ArrayList<>(); // Inizializzo qui la lista in modo tale che
+	private List<ActorFilm> actorFilm = new ArrayList<>(); // Inizializzo qui la lista in modo tale che
 	// quando ci faccio delle operazioni sopra
 	// non risulti null
 
@@ -92,12 +92,12 @@ public class Film implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public List<ActorFilm> getActors() {
-		return actors;
+	public List<ActorFilm> getactorFilm() {
+		return actorFilm;
 	}
 
-	public void setActors(List<ActorFilm> actors) {
-		this.actors = actors;
+	public void setactorFilm(List<ActorFilm> actorFilm) {
+		this.actorFilm = actorFilm;
 	}
 
 	@Override

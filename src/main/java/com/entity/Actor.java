@@ -41,9 +41,9 @@ public class Actor implements Serializable {
 
 	// bi-directional many-to-many association to Film
 	@OneToMany(mappedBy = "actor")
-	private List<ActorFilm> films = new ArrayList<>();// Inizializzo qui la lista in modo tale che
-														// quando ci faccio delle operazioni sopra
-														// non risulti null
+	private List<ActorFilm> actorFilm = new ArrayList<>();// Inizializzo qui la lista in modo tale che
+															// quando ci faccio delle operazioni sopra
+															// non risulti null
 	// Costruttore per le insert
 
 	public Actor(String firstName, String lastName) {
@@ -91,12 +91,12 @@ public class Actor implements Serializable {
 	 * dell'entity
 	 */
 
-	public List<ActorFilm> getFilms() {
-		return films;
+	public List<ActorFilm> getactorFilm() {
+		return actorFilm;
 	}
 
-	public void setFilms(List<ActorFilm> films) {
-		this.films = films;
+	public void setactorFilm(List<ActorFilm> actorFilm) {
+		this.actorFilm = actorFilm;
 	}
 
 	@Override

@@ -212,6 +212,8 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorFilmPKToInsert3.setFilmId(filmToInsert2.getFilmId());
 		actorFilmToInsert2.setId(actorFilmPKToInsert3);
 		actorFilmRepository.save(actorFilmToInsert2);
+		actorRepository.save(actorToInsert4);
+		actorFilmRepository.findActorByFilm(filmToUpdate.getTitle()).forEach(System.out::println);
 
 	}
 
