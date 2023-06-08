@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.entity.Actor;
@@ -22,7 +23,7 @@ public class ActorServiceImpl implements ActorService {
 		try {
 			actorRepository.save(actor);
 			log.info("Inserimento riuscito");
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | OptimisticLockingFailureException e) {
 			log.info("Inserimento fallito");
 			e.printStackTrace();
 		}
@@ -30,6 +31,13 @@ public class ActorServiceImpl implements ActorService {
 
 	@Override
 	public void checkFindAllActors() {
+		List<Actor> actors = actorRepository.findAll();
+		if (actors != null && !actors.isEmpty()) {
+			log.info("lettura eseguita");
+			actors.forEach(System.out::println);
+		} else {
+			log.info("lettura fallita");
+		}
 
 	}
 
@@ -38,7 +46,7 @@ public class ActorServiceImpl implements ActorService {
 		try {
 			actorRepository.saveAll(actorList);
 			log.info("Inserimento riuscito");
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | OptimisticLockingFailureException e) {
 			log.info("Inserimento fallito");
 			e.printStackTrace();
 		}

@@ -15,12 +15,12 @@ import com.entity.Category;
 import com.entity.City;
 import com.entity.Country;
 import com.entity.Film;
-import com.repository.ActorFilmRepository;
 import com.repository.CategoryRepository;
 import com.repository.CityRepository;
 import com.repository.CountryRepository;
-import com.repository.FilmRepository;
+import com.service.ActorFilmService;
 import com.service.ActorService;
+import com.service.FilmService;
 
 import jakarta.annotation.Resource;
 
@@ -38,11 +38,11 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	@Autowired
 	private CityRepository cityRepository;
 	@Autowired
-	private FilmRepository filmRepository;
+	private FilmService filmService;
 	@Autowired
 	private ActorService actorService;
 	@Autowired
-	private ActorFilmRepository actorFilmRepository;
+	private ActorFilmService actorFilmService;
 
 	@Resource(name = "categoryToInsert1")
 	private Category categoryToInsert1;
@@ -155,7 +155,7 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		// insert della many to many
 
 		// inserisco il film
-		filmRepository.save(filmToInsert1);
+		filmService.checkSaveOrUpdateFilm(filmToInsert1);
 
 		// inserisco l'attore
 		actorService.checkSaveOrUpdateActor(actorToInsert1);
@@ -167,11 +167,11 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorFilmPKToInsert1.setFilmId(filmToInsert1.getFilmId());
 		actorFilmToInsert1.setId(actorFilmPKToInsert1);
 
-		actorFilmRepository.save(actorFilmToInsert1);
+		actorFilmService.checkSaveOrUpdateActorFilm(actorFilmToInsert1);
 
 		// attore e film uniti
 		// inserisco il film non relazionato
-		filmRepository.save(filmToInsert2);
+		filmService.checkSaveOrUpdateFilm(filmToInsert2);
 		// Istanzio una lista di Actor da aggiungere ad un Film
 		List<Actor> actorList = new ArrayList<>();
 		// Popolo la lista
@@ -194,15 +194,16 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 			// Imposto l'id dell'entita ActorFilmPK all'entita relazionale ActorFilm
 			actorFilmToInsert2.setId(actorFilmPKToInsert2);
 			// Inserisco la tebella relazionale nel DB
-			actorFilmRepository.save(actorFilmToInsert2);
+			actorFilmService.checkSaveOrUpdateActorFilm(actorFilmToInsert2);
 		}
 
 		// Modifico il film il morto che cammina con the walking dead id 2
-		filmRepository.save(filmToUpdate);
+		filmService.checkSaveOrUpdateFilm(filmToUpdate);
 		// Cancello il film id 1 e l'entita relazionale senza cancellare l'attore
-		actorFilmRepository.delete(actorFilmToInsert1);
-		filmRepository.delete(filmToInsert1);
-		filmRepository.findAll().forEach(System.out::println);
+		actorFilmService.checkDeleteActorFilm(actorFilmToInsert1);
+		filmService.checkDeleteFilm(filmToInsert1);
+		filmService.checkFindAllFilms();
+		actorService.checkFindAllActors();
 		// Imposto il film id 2 all'attore id 1 che attualmente non ha film e faccio il
 		// save
 		actorFilmToInsert2.setActor(actorToInsert1);
@@ -210,10 +211,9 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorFilmPKToInsert3.setActorId(actorToInsert1.getActorId());
 		actorFilmPKToInsert3.setFilmId(filmToInsert2.getFilmId());
 		actorFilmToInsert2.setId(actorFilmPKToInsert3);
-		actorFilmRepository.save(actorFilmToInsert2);
+		actorFilmService.checkSaveOrUpdateActorFilm(actorFilmToInsert2);
 		actorService.checkSaveOrUpdateActor(actorToInsert4);
-		actorFilmRepository.findActorByFilm(filmToUpdate.getTitle()).forEach(System.out::println);
-		actorFilmRepository.findActorByFilmAndActorPrefix(filmToUpdate.getTitle(), "C%").forEach(System.out::println);
-	}
+		actorFilmService.findActorByFilm(filmToUpdate.getTitle());
+		actorFilmService.findActorByFilmAndActorPrefix(filmToUpdate.getTitle(), "C%");
 
 }
