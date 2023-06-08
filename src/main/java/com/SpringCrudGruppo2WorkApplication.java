@@ -16,16 +16,20 @@ import com.entity.City;
 import com.entity.Country;
 import com.entity.Film;
 import com.repository.ActorFilmRepository;
-import com.repository.ActorRepository;
 import com.repository.CategoryRepository;
 import com.repository.CityRepository;
 import com.repository.CountryRepository;
 import com.repository.FilmRepository;
+import com.service.ActorService;
 
 import jakarta.annotation.Resource;
 
 @SpringBootApplication
 public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
+	public static void main(String[] args) {
+		SpringApplication.run(SpringCrudGruppo2WorkApplication.class, args);
+
+	}
 
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -36,7 +40,7 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	@Autowired
 	private FilmRepository filmRepository;
 	@Autowired
-	private ActorRepository actorRepository;
+	private ActorService actorService;
 	@Autowired
 	private ActorFilmRepository actorFilmRepository;
 
@@ -110,11 +114,6 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	@Resource(name = "actorFilmPKToInsert3")
 	private ActorFilmPK actorFilmPKToInsert3;
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringCrudGruppo2WorkApplication.class, args);
-
-	}
-
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -159,7 +158,7 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		filmRepository.save(filmToInsert1);
 
 		// inserisco l'attore
-		actorRepository.save(actorToInsert1);
+		actorService.checkSaveOrUpdateActor(actorToInsert1);
 
 		// attore e film uniti
 		actorFilmToInsert1.setActor(actorToInsert1);
@@ -179,7 +178,7 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorList.add(actorToInsert2);
 		actorList.add(actorToInsert3);
 		// Inserisco gli attori non relazionati ad un film
-		actorRepository.saveAll(actorList);
+		actorService.checkSaveListActor(actorList);
 		// Faccio un for con lo scopo di relazionare le entita
 		for (Actor actor : actorList) {
 			// Imposto l'attore corrente all'entita relazionale(actorFilm)
@@ -212,9 +211,9 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorFilmPKToInsert3.setFilmId(filmToInsert2.getFilmId());
 		actorFilmToInsert2.setId(actorFilmPKToInsert3);
 		actorFilmRepository.save(actorFilmToInsert2);
-		actorRepository.save(actorToInsert4);
+		actorService.checkSaveOrUpdateActor(actorToInsert4);
 		actorFilmRepository.findActorByFilm(filmToUpdate.getTitle()).forEach(System.out::println);
-
+		actorFilmRepository.findActorByFilmAndActorPrefix(filmToUpdate.getTitle(), "C%").forEach(System.out::println);
 	}
 
 }

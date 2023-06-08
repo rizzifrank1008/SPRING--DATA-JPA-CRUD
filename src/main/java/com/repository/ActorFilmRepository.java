@@ -12,6 +12,6 @@ public interface ActorFilmRepository extends JpaRepository<ActorFilm, Integer> {
 	@Query("SELECT a FROM Actor a join actorFilm af join film f WHERE f.title=:title")
 	public List<Actor> findActorByFilm(String title);
 
-//	@Query("SELECT a FROM Actor a, Film f WHERE f.title=:title and a.name like :prefix")
-//	public List<Actor> findActorByFilmAndActorPrefix(String title, String prefix);
+	@Query("SELECT a FROM Actor a join actorFilm af join film f WHERE f.title=:title and a.lastName like :prefix")
+	public List<Actor> findActorByFilmAndActorPrefix(String title, String prefix);
 }
