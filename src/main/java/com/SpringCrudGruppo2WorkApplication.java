@@ -15,11 +15,11 @@ import com.entity.Category;
 import com.entity.City;
 import com.entity.Country;
 import com.entity.Film;
-import com.repository.CategoryRepository;
-import com.repository.CityRepository;
-import com.repository.CountryRepository;
 import com.service.ActorFilmService;
 import com.service.ActorService;
+import com.service.CategoryService;
+import com.service.CityService;
+import com.service.CountryService;
 import com.service.FilmService;
 
 import jakarta.annotation.Resource;
@@ -32,11 +32,11 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 	@Autowired
-	private CountryRepository countryRepository;
+	private CountryService countryService;
 	@Autowired
-	private CityRepository cityRepository;
+	private CityService cityService;
 	@Autowired
 	private FilmService filmService;
 	@Autowired
@@ -117,20 +117,20 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		categoryRepository.save(categoryToInsert1);
-		categoryRepository.save(categoryToInsert2);
-		categoryRepository.save(categoryToInsert3);
-		categoryRepository.saveAndFlush(categoryToUpdate);
-		categoryRepository.deleteById(2);
-		categoryRepository.findAll().forEach(System.out::println);
-		categoryRepository.FindAllByName("Comic").forEach(System.out::println);
-		countryRepository.save(countryToInsert1);
+		categoryService.checkSaveOrUpdateCategory(categoryToInsert1);
+		categoryService.checkSaveOrUpdateCategory(categoryToInsert2);
+		categoryService.checkSaveOrUpdateCategory(categoryToInsert3);
+		categoryService.checkSaveandFlushOrUpdateCategory(categoryToUpdate);
+		categoryService.checkDeleteCategoryById(2);
+		categoryService.checkFindAllCategory();
+		categoryService.checkFindAllCategoryByName("Comic");
+		countryService.checkInsertOrUpdateCountry(countryToInsert1);
 		cityToInsert1.setCountry(countryToInsert1);
-		cityRepository.save(cityToInsert1);
+		cityService.checkInsertOrUpdateCity(cityToInsert1);
 
 		cityToUpdate.setCountry(countryToInsert1);
 
-		cityRepository.save(cityToUpdate);
+		cityService.checkInsertOrUpdateCity(cityToUpdate);
 
 //		// caso delete senza cascadeRemove
 //
@@ -140,17 +140,17 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 		// caso delete con cascadeRemove
 
-		countryRepository.save(countryToInsert2); // inserisco Romania
+		countryService.checkInsertOrUpdateCountry(countryToInsert2); // inserisco Romania
 //		countryRepository.deleteById(1); // rimuovo italia
 
 		// stampiamo tutte le città d'italia (palermo e grumo appula)
 		cityToInsert2.setCountry(countryToInsert2);
-		cityRepository.save(cityToInsert2);
+		cityService.checkInsertOrUpdateCity(cityToInsert2);
 
 		cityToInsert3.setCountry(countryToInsert1);
-		cityRepository.save(cityToInsert3);
+		cityService.checkInsertOrUpdateCity(cityToInsert3);
 
-		cityRepository.FindCityByCountry(countryToInsert1).forEach(System.out::println);
+		cityService.checkFindCityByCountry(countryToInsert1);
 
 		// insert della many to many
 
