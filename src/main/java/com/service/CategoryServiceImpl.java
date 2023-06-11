@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import com.entity.Category;
@@ -22,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 			categoryRepository.save(category);
 			log.info("Inserimento riuscito");
 
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | OptimisticLockingFailureException e) {
 			log.info("Inserimento fallito");
 			e.printStackTrace();
 		}
@@ -34,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 			categoryRepository.saveAndFlush(category);
 			log.info("Inserimento riuscito");
 
-		} catch (Exception e) {
+		} catch (IllegalArgumentException | OptimisticLockingFailureException e) {
 			log.info("Inserimento fallito");
 			e.printStackTrace();
 		}
@@ -42,7 +43,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public void checkDeleteCategoryById(Integer id) {
-		categoryRepository.deleteById(id);
+		try {
+			categoryRepository.deleteById(id);
+			log.info("Delete riuscita");
+		} catch (IllegalArgumentException e) {
+			log.info("Delete fallita");
+			e.printStackTrace();
+		}
 	}
 
 	@Override

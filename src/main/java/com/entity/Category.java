@@ -31,13 +31,13 @@ public class Category implements Serializable {
 	private Timestamp lastUpdate;
 
 	private String name;
-	// costruttore per update
 
 	// costruttore per insert
 	public Category(String name) {
 		this.name = name;
 	}
 
+	// costruttore per update
 	public Category(Integer categoryId, String name) {
 		this.categoryId = categoryId;
 		this.name = name;

@@ -50,7 +50,7 @@ public class ActorFilmSeviceImpl implements ActorFilmService {
 			log.info("lettura eseguita");
 			actors.forEach(System.out::println);
 		} else {
-			log.info("lettura fallita");
+			log.info("Nessun attore trovato");
 		}
 
 	}
@@ -62,7 +62,7 @@ public class ActorFilmSeviceImpl implements ActorFilmService {
 			log.info("lettura eseguita");
 			actors.forEach(System.out::println);
 		} else {
-			log.info("lettura fallita");
+			log.info("Nessun attore trovato");
 		}
 
 	}
