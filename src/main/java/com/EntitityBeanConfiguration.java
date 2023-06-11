@@ -79,7 +79,7 @@ public class EntitityBeanConfiguration {
 
 	@Bean(name = "actorToInsert1")
 	public Actor getActorToInsert1() {
-		return new Actor("Mia", "Khalifa");
+		return new Actor("Sarà", "Smith");
 	}
 
 	@Bean(name = "actorToInsert2")
