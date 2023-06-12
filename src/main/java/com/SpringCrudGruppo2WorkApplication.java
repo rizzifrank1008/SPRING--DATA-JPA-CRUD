@@ -17,14 +17,14 @@ import com.entity.Country;
 import com.entity.Course;
 import com.entity.Film;
 import com.entity.Student;
-import com.repository.CourseRepository;
-import com.repository.StudentRepository;
 import com.service.ActorFilmService;
 import com.service.ActorService;
 import com.service.CategoryService;
 import com.service.CityService;
 import com.service.CountryService;
+import com.service.CourseService;
 import com.service.FilmService;
+import com.service.StudentService;
 
 import jakarta.annotation.Resource;
 
@@ -49,10 +49,10 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	private ActorFilmService actorFilmService;
 
 	@Autowired
-	private CourseRepository courseRepository;
+	private CourseService courseService;
 
 	@Autowired
-	private StudentRepository studentRepository;
+	private StudentService studentService;
 
 	@Resource(name = "categoryToInsert1")
 	private Category categoryToInsert1;
@@ -259,17 +259,17 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 			for (Course course : courseList) {
 				course.setStudents(studentList);
-				courseRepository.save(course);
+				courseService.checkSaveOrUpdateCourse(course);
 			}
 			student.setLikedCourses(courseList);
-			studentRepository.save(student);
+			studentService.checkInsertOrUpdateStudent(student);
 
 		}
 
-		studentRepository.findStudentBycourse(courseToInsert1.getCode()).forEach(System.out::println);
+		studentService.checkfindStudentBycourse(courseToInsert1.getCode());
 
 		System.out.println("ora stampo tutti i corsi dello studente 1");
-		studentRepository.removeCourseByCode(courseToInsert1.getCode(), studentToInsert1.getPassportNumber());
+//		studentRepository.removeCourseByCode(courseToInsert1.getCode(), studentToInsert1.getPassportNumber());
 		studentToInsert1.getLikedCourses().forEach(System.out::println);
 
 		// chiedere a Giulio perchè facendo il ragionamento inverso non va

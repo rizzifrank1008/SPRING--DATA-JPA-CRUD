@@ -8,12 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c"),
-		@NamedQuery(name = "Course.findCodeByTitle", query = "SELECT c.code FROM Course c WHERE c.title = :title") })
+@NamedQuery(name = "Course.findAll", query = "SELECT c FROM Course c")
 
 public class Course {
 

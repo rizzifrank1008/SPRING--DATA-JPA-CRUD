@@ -10,11 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s") })
+@NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s")
 public class Student {
 
 	@Id
