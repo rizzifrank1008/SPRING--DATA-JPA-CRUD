@@ -9,7 +9,9 @@ import com.entity.ActorFilmPK;
 import com.entity.Category;
 import com.entity.City;
 import com.entity.Country;
+import com.entity.Course;
 import com.entity.Film;
+import com.entity.Student;
 
 @Configuration
 public class EntitityBeanConfiguration {
@@ -143,6 +145,31 @@ public class EntitityBeanConfiguration {
 	@Bean(name = "actorFilmPKToInsert3")
 	public ActorFilmPK actorFilmPKToInsert3() {
 		return new ActorFilmPK();
+	}
+
+	@Bean(name = "studentToInsert1")
+	public Student getStudentToInsert1() {
+		return new Student("rizzi@gmail.com", "Francesco", "Rizzi", 22);
+	}
+
+	@Bean(name = "studentToInsert2")
+	public Student getStudentToInsert2() {
+		return new Student("comparato@gmail.com", "Andrea", "Comparato", 29);
+	}
+
+	@Bean(name = "studentToInsert3")
+	public Student getStudentToInsert3() {
+		return new Student("scarola@gmail.com", "Giovanni Paolo", "Scarola", 27);
+	}
+
+	@Bean(name = "courseToInsert1")
+	public Course getCourseToInsert1() {
+		return new Course("Economia", "tanta matematica finanziaria ");
+	}
+
+	@Bean(name = "courseToInsert2")
+	public Course getCourseToInsert2() {
+		return new Course("Programmazione", "tanto codice ,datemi la mia paperella ");
 	}
 
 }

@@ -14,7 +14,11 @@ import com.entity.ActorFilmPK;
 import com.entity.Category;
 import com.entity.City;
 import com.entity.Country;
+import com.entity.Course;
 import com.entity.Film;
+import com.entity.Student;
+import com.repository.CourseRepository;
+import com.repository.StudentRepository;
 import com.service.ActorFilmService;
 import com.service.ActorService;
 import com.service.CategoryService;
@@ -43,6 +47,12 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 	private ActorService actorService;
 	@Autowired
 	private ActorFilmService actorFilmService;
+
+	@Autowired
+	private CourseRepository courseRepository;
+
+	@Autowired
+	private StudentRepository studentRepository;
 
 	@Resource(name = "categoryToInsert1")
 	private Category categoryToInsert1;
@@ -113,6 +123,21 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 
 	@Resource(name = "actorFilmPKToInsert3")
 	private ActorFilmPK actorFilmPKToInsert3;
+
+	@Resource(name = "studentToInsert1")
+	private Student studentToInsert1;
+
+	@Resource(name = "studentToInsert2")
+	private Student studentToInsert2;
+
+	@Resource(name = "studentToInsert3")
+	private Student studentToInsert3;
+
+	@Resource(name = "courseToInsert1")
+	private Course courseToInsert1;
+
+	@Resource(name = "courseToInsert2")
+	private Course courseToInsert2;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -215,6 +240,51 @@ public class SpringCrudGruppo2WorkApplication implements CommandLineRunner {
 		actorService.checkSaveOrUpdateActor(actorToInsert4);
 		actorFilmService.CheckFindActorByFilm(filmToUpdate.getTitle());
 		actorFilmService.CheckFindActorByFilmPrefix(filmToUpdate.getTitle(), "C");
+
+		// voglio inserire tre studenti in due corsi differenti
+
+		List<Student> studentList = new ArrayList<>();
+		List<Course> courseList = new ArrayList<>();
+
+		// riempo la lista di studenti
+		studentList.add(studentToInsert1);
+		studentList.add(studentToInsert2);
+		studentList.add(studentToInsert3);
+		// riempo la lista di corsi
+		courseList.add(courseToInsert1);
+		courseList.add(courseToInsert2);
+
+		// li salvo sul db
+		for (Student student : studentList) {
+
+			for (Course course : courseList) {
+				course.setStudents(studentList);
+				courseRepository.save(course);
+			}
+			student.setLikedCourses(courseList);
+			studentRepository.save(student);
+
+		}
+
+		studentRepository.findStudentBycourse(courseToInsert1.getCode()).forEach(System.out::println);
+
+		System.out.println("ora stampo tutti i corsi dello studente 1");
+		studentRepository.removeCourseByCode(courseToInsert1.getCode(), studentToInsert1.getPassportNumber());
+		studentToInsert1.getLikedCourses().forEach(System.out::println);
+
+		// chiedere a Giulio perchè facendo il ragionamento inverso non va
+
+		// li salvo sul db
+//		for (Course course : courseList) {
+//			course.setStudents(studentList);
+//			for (Student student : studentList) {
+//				student.setLikedCourses(courseList);
+//				studentRepository.save(student);
+//			}
+//
+//			courseRepository.save(course);
+//
+//		}
 
 	}
 }
